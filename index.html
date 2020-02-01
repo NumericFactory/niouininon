@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible">
+ <title>Jeu ni oui ni non</title>
+ <link rel="stylesheet" href="css/reboot.css">
+ <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+ <div class="container text-center">
+
+  <div class="hero">
+   <div class="score">
+    <p>SCORE : <span></span></p>
+   </div>
+
+   <h1>Ni oui ni non!</h1>
+
+   <div class="action">
+    <button id="startGame">
+     <span>Démarrer le jeu</span>
+     <svg viewBox="0 0 32 32" class="icon icon-play" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M11.303 8l11.394 7.997L11.303 24z" /></svg>
+     <svg viewBox="0 0 32 32" class="icon icon-pause hide" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M18.432 7.5h4.547v17h-4.547zM9.022 7.5h4.545v17H9.022z" /></svg>
+    </button>
+   </div>
+
+   <h2 class="question-title">Question <span></span></h2>
+  </div>
+
+  <div class="card question">
+
+   <p></p>
+  </div>
+
+
+  <div class="timeToRead">
+   <progress class="progress-bar" value="" max=""></progress>
+   <p class="responseTime"><em></em>s</p>
+  </div>
+
+ </div>
+
+
+ <script src="js/utilities.js"> </script>
+ <script src="js/script.js"> </script>
+</body>
+
+</html>

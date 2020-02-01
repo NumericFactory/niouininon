@@ -1,0 +1,134 @@
+.container {
+  width: 700px;
+  margin: 0 auto;
+}
+.hide {
+  display: none;
+}
+div.score {
+  color: #000;
+  padding: 9px 25px;
+  background: #50ffb6;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-weight: bold;
+  border-radius: 0 0 0 5px;
+  border-left: 3px solid #26d98e;
+  border-bottom: 4px solid #26d98e;
+}
+div.score p {
+  margin-bottom: 0;
+}
+.hero {
+  background: #2af6a1;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-top: 33px;
+  padding-bottom: 8px;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  background-image: url('../img/vague.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: bottom;
+  color: rgb(0, 0, 0);
+}
+.hero .action {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.hero button {
+  margin: 21px;
+  background: #fff;
+  box-shadow: none;
+  padding: 8px 24px;
+  border-radius: 30px;
+  border: 2px solid #0a0a0a;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 250px;
+}
+.icon {
+  width: 40px;
+}
+.hero button .icon {
+  width: 31px;
+  background: #2af6a1;
+  border-radius: 50%;
+}
+.text-center {
+  text-align: center;
+}
+.responseTime {
+  font-size: 17px;
+  font-weight: bold;
+  color: rgb(162, 168, 170);
+  padding-top: 0;
+  display: none;
+}
+progress {
+ display: none;
+ width: 33%;
+ margin: 0 auto;
+}
+.question {
+ display: none;
+}
+h2.question-title {
+  opacity: 0;
+  text-transform: uppercase;
+  margin-top: 25px;
+  color:rgb(255, 255, 255);
+  font-weight: 300;
+}
+.question p {
+  font-size:1.53em;
+  font-weight: 700;
+}
+
+.progress-bar {
+  background-color: whiteSmoke;
+  border-radius: 2px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;
+  height: 7px;
+  position: relative;
+  display: block;
+}
+progress::-webkit-progress-bar {
+  background-color: #e1e1e1;
+  border-radius: 30px;
+}
+progress[value]::-webkit-progress-value {
+  background-image:
+	   
+	   -webkit-linear-gradient(top, 
+	                           rgba(255, 255, 255, .25), 
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, rgb(12, 127, 221), rgb(133, 197, 189));
+
+    border-radius: 2px; 
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    -webkit-animation: animate-stripes 5s linear infinite;
+    animation: animate-stripes 5s linear infinite;
+    transition: 0.3s all linear;
+}
+@-webkit-keyframes animate-stripes {
+  100% { background-position: -100px 0px; }
+}
+
+@keyframes animate-stripes {
+  100% { background-position: -100px 0px; }
+}
+
+@media screen and (min-width: 200px) and (max-width: 640px) {
+  .container {
+    width: 400px
+  }
+}
