@@ -167,7 +167,6 @@ function stopGame() {
 }
 
 function listen() {
- rec.start();
  rec.onresult = function (e) {
   //console.log(e);
   for (let vocal of e.results) {
@@ -187,15 +186,20 @@ function listen() {
  Role : démarrer le jeu
 ***********************************************/
 function startGame() {
- initializeGameState();
- gameState.isPlaying = true;
- document.querySelector('.icon-pause').classList.toggle('hide');
- document.querySelector('.icon-play').classList.toggle('hide');
- // Charger le array randomQuestions de 10 questions au hasard
- gameState.randomQuestions = getRandomQuestions(10);
- console.log(gameState);
- askQuestionToUser(gameState.currentIndex);
- listen();
+ rec.start();
+ rec.onaudiostart = function () {
+
+  initializeGameState();
+  gameState.isPlaying = true;
+  document.querySelector('.icon-pause').classList.toggle('hide');
+  document.querySelector('.icon-play').classList.toggle('hide');
+  // Charger le array randomQuestions de 10 questions au hasard
+  gameState.randomQuestions = getRandomQuestions(10);
+  console.log(gameState);
+  askQuestionToUser(gameState.currentIndex);
+  listen();
+
+ }
 }
 
 /************************************************
