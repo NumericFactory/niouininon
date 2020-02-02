@@ -1,9 +1,21 @@
-.container {
-  width: 700px;
-  margin: 0 auto;
-}
 .hide {
   display: none;
+}
+.copy {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.tile-title {
+  margin-bottom: 3px;
+}
+.panel {
+  height: 100vh;
+}
+.panel .panel-body {
+  padding: 10px .8rem;
+}
+.badge[data-badge]::after {
+  font-weight: bold;
 }
 div.score {
   color: #000;
@@ -14,14 +26,12 @@ div.score {
   right: 0;
   font-weight: bold;
   border-radius: 0 0 0 5px;
-  border-left: 3px solid #26d98e;
-  border-bottom: 4px solid #26d98e;
 }
 div.score p {
   margin-bottom: 0;
 }
 .hero {
-  background: #2af6a1;
+  background: #50ffb6;
   text-align: center;
   margin-bottom: 20px;
   padding-top: 33px;
@@ -54,6 +64,7 @@ div.score p {
   align-items: center;
   justify-content: space-evenly;
   width: 250px;
+  height: auto;
 }
 .icon {
   width: 40px;
@@ -83,10 +94,10 @@ progress {
 }
 h2.question-title {
   opacity: 0;
-  text-transform: uppercase;
   margin-top: 25px;
-  color:rgb(255, 255, 255);
+  color: rgb(215, 211, 255);
   font-weight: 300;
+  font-style: italic;
 }
 .question p {
   font-size:1.53em;

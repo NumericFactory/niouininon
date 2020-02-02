@@ -6,45 +6,137 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <meta http-equiv="X-UA-Compatible">
  <title>Jeu ni oui ni non</title>
- <link rel="stylesheet" href="css/reboot.css">
+ <link rel="stylesheet" href="css/spectre.css">
  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
- <div class="container text-center">
 
-  <div class="hero">
-   <div class="score">
-    <p>SCORE : <span></span></p>
+ <div class="container">
+  <div class="columns col-gapless">
+   <!-- INFOS -->
+   <div class="column col-3 col-md-12 col-xs-12">
+
+   </div>
+   <!-- JEU -->
+   <div class="column col-5 col-md-12 col-xs-12">
+    <div class="hero">
+     <div class="score">
+      <p>SCORE <span>
+        <figure class="avatar avatar-xl badge" data-badge="0" data-initial="YZ"><img src="img/avatar-1.png" alt="YZ">
+        </figure>
+       </span></p>
+     </div>
+
+     <h1>Ni oui ni non!</h1>
+
+     <div class="action">
+      <button class="btn" id="startGame">
+       <span>Démarrer le jeu</span>
+       <svg viewBox="0 0 32 32" class="icon icon-play" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M11.303 8l11.394 7.997L11.303 24z" /></svg>
+       <svg viewBox="0 0 32 32" class="icon icon-pause hide" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M18.432 7.5h4.547v17h-4.547zM9.022 7.5h4.545v17H9.022z" /></svg>
+      </button>
+     </div>
+
+     <h2 class="question-title">Question <span></span></h2>
+    </div>
+
+    <div class="question text-center">
+     <p></p>
+    </div>
+
+    <div class="timeToRead text-center">
+     <progress class="progress-bar" value="" max=""></progress>
+     <p class="responseTime"><em></em>s</p>
+    </div>
    </div>
 
-   <h1>Ni oui ni non!</h1>
+   <!-- CLASSEMENT -->
+   <div class="column col-2 col-md-12 col-xs-12 col-ml-auto">
+    <div class="panel">
+     <div class="panel-header text-center">
+      <div class="panel-title h5 mt-10">CLASSEMENT</div>
+     </div>
+     <nav class="panel-nav">
+      <ul class="tab tab-block">
+       <li class="tab-item active"><a href="#panels">Score</a></li>
+       <li class="tab-item"><a href="#panels">Moyenne</a></li>
+       <li class="tab-item"><a href="#panels">Parties</a></li>
+      </ul>
+     </nav>
+     <div class="panel-body">
 
-   <div class="action">
-    <button id="startGame">
-     <span>Démarrer le jeu</span>
-     <svg viewBox="0 0 32 32" class="icon icon-play" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M11.303 8l11.394 7.997L11.303 24z" /></svg>
-     <svg viewBox="0 0 32 32" class="icon icon-pause hide" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M18.432 7.5h4.547v17h-4.547zM9.022 7.5h4.545v17H9.022z" /></svg>
-    </button>
+      <div class="tile">
+       <div class="tile-icon">
+        <figure class="avatar"><img src="img/avatar-4.png" alt="Avatar"></figure>
+       </div>
+       <div class="tile-content">
+        <p class="tile-title text-bold">Fred Lossignol</p>
+        <p class="tile-subtitle">22pts</p>
+       </div>
+      </div>
+
+      <div class="tile">
+       <div class="tile-icon">
+        <figure class="avatar"><img src="img/avatar-3.png" alt="Avatar"></figure>
+       </div>
+       <div class="tile-content">
+        <p class="tile-title text-bold">Adrien Sergent</p>
+        <p class="tile-subtitle">21pts</p>
+       </div>
+      </div>
+
+      <div class="tile">
+       <div class="tile-icon">
+        <figure class="avatar"><img src="img/avatar-1.png" alt="Avatar"></figure>
+       </div>
+       <div class="tile-content">
+        <p class="tile-title text-bold">Thor Odinson</p>
+        <p class="tile-subtitle">40pts</p>
+       </div>
+      </div>
+      <div class="tile">
+       <div class="tile-icon">
+        <figure class="avatar" data-initial="BB"></figure>
+       </div>
+       <div class="tile-content">
+        <p class="tile-title text-bold">Bruce Banner</p>
+        <p class="tile-subtitle">20pts</p>
+       </div>
+      </div>
+      <div class="tile">
+       <div class="tile-icon">
+        <figure class="avatar"><img src="img/avatar-2.png" alt="Avatar"></figure>
+       </div>
+       <div class="tile-content">
+        <p class="tile-title text-bold">Steve Rogers</p>
+        <p class="tile-subtitle">17pts</p>
+       </div>
+      </div>
+      <div class="tile">
+       <div class="tile-icon">
+        <figure class="avatar"><img src="img/avatar-3.png" alt="Avatar"></figure>
+       </div>
+       <div class="tile-content">
+        <p class="tile-title text-bold">Natasha Romanoff</p>
+        <p class="tile-subtitle">7pts</p>
+       </div>
+      </div>
+     </div>
+     <div class="panel-footer text-center">
+      <span class="copy text-center">
+       <a target="_blank" href="https://github.com/NumericFactory/niouininon">Github</a> .
+       <a target="_blank" href="https://twitter.com/FredLossignol">Twitter</a>
+      </span>
+      <!-- <button class="btn btn-primary btn-block">Save</button> -->
+     </div>
+    </div>
    </div>
-
-   <h2 class="question-title">Question <span></span></h2>
   </div>
-
-  <div class="card question">
-
-   <p></p>
-  </div>
-
-
-  <div class="timeToRead">
-   <progress class="progress-bar" value="" max=""></progress>
-   <p class="responseTime"><em></em>s</p>
-  </div>
-
  </div>
+
 
 
  <script src="js/utilities.js"> </script>

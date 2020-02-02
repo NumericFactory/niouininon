@@ -1,5 +1,5 @@
 let timerReader; // Le temps de lecture de la question
-let timerAnswer = 5; // Le temps qu'on laisse au joueur pour répondre
+let timerAnswer = 3; // Le temps qu'on laisse au joueur pour répondre
 var timerGlobal; // = timerReader +  timerAnswer
 let idSetinterval;
 
@@ -28,7 +28,7 @@ let responseElt = document.querySelector('p.responseTime');
 let responseTimeElt = document.querySelector('p.responseTime em');
 let progressBar = document.querySelector('progress');
 
-let scoreElt = document.querySelector('div.score p span');
+let scoreElt = document.querySelector('div.score figure');
 
 
 let questions = [
@@ -74,7 +74,7 @@ function initializeGameState() {
 }
 
 function printScore(score) {
- scoreElt.textContent = score;
+ scoreElt.dataset.badge = score;
 }
 
 
@@ -170,7 +170,7 @@ function listen() {
  rec.onresult = function (e) {
   //console.log(e);
   for (let vocal of e.results) {
-   //console.log(vocal[0].transcript)
+   console.log(vocal[0].transcript)
    if (vocal[0].transcript.includes('oui') || vocal[0].transcript.includes('non')) {
     rec.abort();
     alert("Vous avez perdu !!! Votre score est de " + gameState.score);
@@ -188,7 +188,7 @@ function listen() {
 function startGame() {
  rec.start();
  rec.onaudiostart = function () {
-
+  console.log("démarrage");
   initializeGameState();
   gameState.isPlaying = true;
   document.querySelector('.icon-pause').classList.toggle('hide');
