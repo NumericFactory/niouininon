@@ -51,6 +51,9 @@ player = {
  scores: []
 }
 
+//localStorage.setItem('player', JSON.stringify(player) );
+//JSON.parse( localStorage.getItem('player') )
+
 let questions = [
  "Tu es prêt à jouer à ce jeu ?",
  "Tu veux jouer à ce jeu avec moi ?",
