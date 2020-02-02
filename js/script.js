@@ -38,13 +38,18 @@ let replayBtn = document.querySelector('.replaynow');
 let classementListElt = document.querySelector('div.classement');
 
 let classement = [
- { pseudo: "Fred Lossignol", avatar: 'avatar-4.png', score: 5 },
+ { pseudo: "Fred Lossignol", avatar: 'avatar-4.png', score: 6 },
  { pseudo: "Adrien Sergent", avatar: 'avatar-3.png', score: 4 },
  { pseudo: "Bruce Banner", avatar: 'avatar-2.png', score: 3 },
  { pseudo: "Steve Rogers", avatar: 'avatar-1.png', score: 3 },
  { pseudo: "Natasha Romanoff", avatar: 'avatar-4.png', score: 2 },
  { pseudo: "Thor Odinson", avatar: 'avatar-3.png', score: 1 },
 ];
+
+player = {
+ pseudo: '',
+ scores: []
+}
 
 let questions = [
  "Tu es prêt à jouer à ce jeu ?",
@@ -94,8 +99,8 @@ function printScore(score) {
 }
 
 function printClassement() {
+ classementListElt.innerHTML = "";
  for (let gamer of classement) {
-
   let template = `
   <div class="tile">
   <div class="tile-icon">
@@ -108,9 +113,7 @@ function printClassement() {
  </div>
   `;
   classementListElt.innerHTML += template;
-
  }
-
 }
 
 
