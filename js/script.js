@@ -29,7 +29,22 @@ let responseTimeElt = document.querySelector('p.responseTime em');
 let progressBar = document.querySelector('progress');
 
 let scoreElt = document.querySelector('div.score figure');
+let modalElt = document.querySelector('div.modal');
+let modalScoreElt = document.querySelector('div.modal .empty-title strong');
 
+let modalCloseBtn = document.querySelector('div.modal a.btn-clear');
+let replayBtn = document.querySelector('.replaynow');
+
+let classementListElt = document.querySelector('div.classement');
+
+let classement = [
+ { pseudo: "Fred Lossignol", avatar: 'avatar-4.png', score: 5 },
+ { pseudo: "Adrien Sergent", avatar: 'avatar-3.png', score: 4 },
+ { pseudo: "Bruce Banner", avatar: 'avatar-2.png', score: 3 },
+ { pseudo: "Steve Rogers", avatar: 'avatar-1.png', score: 3 },
+ { pseudo: "Natasha Romanoff", avatar: 'avatar-4.png', score: 2 },
+ { pseudo: "Thor Odinson", avatar: 'avatar-3.png', score: 1 },
+];
 
 let questions = [
  "Tu es prêt à jouer à ce jeu ?",
@@ -75,8 +90,40 @@ function initializeGameState() {
 
 function printScore(score) {
  scoreElt.dataset.badge = score;
+ modalScoreElt.textContent = score;
 }
 
+function printClassement() {
+ for (let gamer of classement) {
+
+  let template = `
+  <div class="tile">
+  <div class="tile-icon">
+   <figure class="avatar"><img src="img/${gamer.avatar}" alt="Avatar"></figure>
+  </div>
+  <div class="tile-content">
+   <p class="tile-title text-bold">${gamer.pseudo}</p>
+   <p class="tile-subtitle">${gamer.score}pts</p>
+  </div>
+ </div>
+  `;
+  classementListElt.innerHTML += template;
+
+ }
+
+}
+
+
+function resetPrint() {
+ questionTitleElt.style.opacity = 0;
+ questionElt.textContent = "";
+ startGameBtn.querySelector('span').textContent = "Démarrer le jeu";
+ progressBar.value = 0;
+ progressBar.max = 0;
+ responseTimeElt.textContent = "";
+ responseElt.style.display = 'none';
+ scoreElt.dataset.badge = 0;
+}
 
 /**************************************************************************
  Role : animer la progressbar en modifiant la valeur de son attribut value
@@ -143,6 +190,9 @@ function nextQuestion() {
  }
 }
 
+/****************************** /
+DEMARRER OU ARRETER LE JEU
+*******************************/
 function startOrStop() {
  if (gameState.isPlaying == false) {
   startGame();
@@ -150,20 +200,23 @@ function startOrStop() {
  }
  else {
   stopGame();
-  startGameBtn.querySelector('span').textContent = "Démarrer le jeu"
+  startGameBtn.querySelector('span').textContent = "Démarrer le jeu";
+  openModal();
  }
 }
 
 function stopGame() {
  clearInterval(idSetinterval)
  initializeGameState();
- gameState.isPlaying = false
+ gameState.isPlaying = false;
 
  document.querySelector('.icon-pause').classList.toggle('hide');
  document.querySelector('.icon-play').classList.toggle('hide');
 
+ resetPrint();
+ rec.abort();
  console.log(gameState);
- alert("Fin")
+ //alert("Fin")
 }
 
 function listen() {
@@ -173,7 +226,8 @@ function listen() {
    console.log(vocal[0].transcript)
    if (vocal[0].transcript.includes('oui') || vocal[0].transcript.includes('non')) {
     rec.abort();
-    alert("Vous avez perdu !!! Votre score est de " + gameState.score);
+    //alert("Vous avez perdu !!! Votre score est de " + gameState.score);
+    openModal();
     stopGame();
     break;
    }
@@ -202,8 +256,28 @@ function startGame() {
  }
 }
 
+function openModal() {
+ modalElt.classList.add('active');
+}
+
+function closeModal() {
+ modalElt.classList.remove('active');
+}
+
+function replay() {
+ closeModal();
+ startGame();
+ startGameBtn.querySelector('span').textContent = "Arrêter le jeu";
+}
+
+
+
+printClassement();
+
 /************************************************
  ECOUTEURS D'EVENEMENTS
 *************************************************/
 // Au clic sur le bouton "Démarrer le jeu"
 startGameBtn.addEventListener('click', startOrStop);
+modalCloseBtn.addEventListener('click', closeModal);
+replayBtn.addEventListener('click', replay);

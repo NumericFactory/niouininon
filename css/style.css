@@ -1,6 +1,14 @@
 .hide {
   display: none;
 }
+.btn.fbcolor {
+  background:#4267b2;
+  color: #fff;
+}
+.btn.twcolor {
+  background:#00ACEE;
+  color: #fff;
+}
 .copy {
   font-size: 0.8em;
   font-weight: bold;
