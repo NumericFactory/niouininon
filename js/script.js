@@ -33,6 +33,7 @@ let modalElt = document.querySelector('div.modal');
 let modalScoreElt = document.querySelector('div.modal .empty-title strong');
 
 let modalCloseBtn = document.querySelector('div.modal a.btn-clear');
+let modalBadWordElt = document.querySelector('div.modal div.modal-title em');
 let replayBtn = document.querySelector('.replaynow');
 
 let classementListElt = document.querySelector('div.classement');
@@ -47,6 +48,8 @@ let classement = [
 ];
 
 player = {
+ arrayOfWordsPlayerSaid: [],
+ lastBadWordSaid: '',
  pseudo: '',
  scores: []
 }
@@ -103,7 +106,7 @@ function printScore(score) {
 
 function printClassement() {
  classementListElt.innerHTML = "";
- for (let gamer of classement) {
+ classement.map((gamer) => {
   let template = `
   <div class="tile">
   <div class="tile-icon">
@@ -116,9 +119,8 @@ function printClassement() {
  </div>
   `;
   classementListElt.innerHTML += template;
- }
+ })
 }
-
 
 function resetPrint() {
  questionTitleElt.style.opacity = 0;
@@ -229,8 +231,19 @@ function listen() {
  rec.onresult = function (e) {
   //console.log(e);
   for (let vocal of e.results) {
-   console.log(vocal[0].transcript)
-   if (vocal[0].transcript.includes('oui') || vocal[0].transcript.includes('non')) {
+   //console.log(vocal[0].transcript)
+   // rechercher un mot interdit dans ce que dit le joueur (dans la string vocal[0].transcript)
+   player.arrayOfWordsPlayerSaid = vocal[0].transcript.split(" ");
+   console.log(player.arrayOfWordsPlayerSaid);
+   let found = player.arrayOfWordsPlayerSaid.some(badWord => {
+    if (wrongWords.indexOf(badWord) >= 0) {
+     player.lastBadWordSaid = badWord;
+     modalBadWordElt.textContent = player.lastBadWordSaid;
+     return true;
+    }
+   });
+   //if (vocal[0].transcript.includes('oui') || vocal[0].transcript.includes('non')) {
+   if (found) {
     rec.abort();
     //alert("Vous avez perdu !!! Votre score est de " + gameState.score);
     openModal();
