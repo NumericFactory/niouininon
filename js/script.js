@@ -51,7 +51,8 @@ player = {
  arrayOfWordsPlayerSaid: [],
  lastBadWordSaid: '',
  pseudo: '',
- scores: []
+ scores: [], 
+ bestScore: 0
 }
 
 //localStorage.setItem('player', JSON.stringify(player) );
@@ -131,6 +132,14 @@ function resetPrint() {
  responseTimeElt.textContent = "";
  responseElt.style.display = 'none';
  scoreElt.dataset.badge = 0;
+}
+
+function setLocalStorage() { 
+    if(gameState.score > player.bestScore) {
+        player.bestScore = gameState.score 
+    }
+    localStorage.setItem('player', JSON.stringify(player) ); 
+
 }
 
 /**************************************************************************
@@ -215,6 +224,7 @@ function startOrStop() {
 
 function stopGame() {
  clearInterval(idSetinterval)
+ setLocalStorage(); 
  initializeGameState();
  gameState.isPlaying = false;
 
@@ -224,7 +234,9 @@ function stopGame() {
  resetPrint();
  rec.abort();
  console.log(gameState);
- //alert("Fin")
+ //alert("Fin") 
+ 
+
 }
 
 function listen() {
@@ -268,7 +280,9 @@ function startGame() {
   document.querySelector('.icon-play').classList.toggle('hide');
   // Charger le array randomQuestions de 10 questions au hasard
   gameState.randomQuestions = getRandomQuestions(10);
-  console.log(gameState);
+  console.log(gameState); 
+  player.pseudo = prompt("Entrez votre pseudo"); 
+  console.log(player.pseudo)
   askQuestionToUser(gameState.currentIndex);
   listen();
 
