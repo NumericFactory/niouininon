@@ -1,3 +1,13 @@
+p {
+  margin: 0 0 1rem;
+}
+div.classement div.player {
+  background: #d6ffee;
+  color: #000;
+  padding: 4px 11px;
+  width: 299px;
+  margin-left: -16px;
+}
 .hide {
   display: none;
 }

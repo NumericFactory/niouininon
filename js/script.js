@@ -129,7 +129,7 @@ function printClassement() {
  classementListElt.innerHTML = "";
  gameState.classement.map((gamer) => {
   let template = `
-  <div class="tile">
+  <div data-id="${gamer.id}" class="tile">
   <div class="tile-icon">
    <figure class="avatar"><img src="img/${gamer.avatar}" alt="Avatar"></figure>
   </div>
@@ -140,7 +140,14 @@ function printClassement() {
  </div>
   `;
   classementListElt.innerHTML += template;
- })
+ });
+
+ let playersElt = document.querySelectorAll('.tile')
+ for (let playerDiv of playersElt) {
+  if (playerDiv.dataset.id === player.id) {
+   playerDiv.classList.add('player')
+  }
+ }
 }
 
 function resetPrint() {
@@ -238,6 +245,7 @@ function updateClassement() {
  }
 
  /* SAUVEGARDER ET AFFICHER LE CLASSEMENT MIS A JOUR */
+ gameState.classement = classement;
  setClassementInLocalStorage();
  printClassement();
 }
