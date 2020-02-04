@@ -135,9 +135,14 @@ function resetPrint() {
 }
 
 function setLocalStorage() { 
-    if(gameState.score > player.bestScore) {
+    player.scores.push(gameState.score) 
+    /*if(gameState.score > player.bestScore) {
         player.bestScore = gameState.score 
-    }
+    } */ 
+    let hightscore = player.scores.reduce(function (a,b) {
+        return Math.max(a,b); 
+    }); 
+    player.bestScore = hightscore; 
     localStorage.setItem('player', JSON.stringify(player) ); 
 
 }
