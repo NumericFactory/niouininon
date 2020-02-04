@@ -51,7 +51,8 @@ player = {
  arrayOfWordsPlayerSaid: [],
  lastBadWordSaid: '',
  pseudo: '',
- scores: []
+ scores: [],
+ bestScore: 0
 }
 
 //localStorage.setItem('player', JSON.stringify(player) );
@@ -131,6 +132,19 @@ function resetPrint() {
  responseTimeElt.textContent = "";
  responseElt.style.display = 'none';
  scoreElt.dataset.badge = 0;
+}
+
+function setLocalStorage() {
+ player.scores.push(gameState.score)
+ /*if(gameState.score > player.bestScore) {
+     player.bestScore = gameState.score 
+ } */
+ let hightscore = player.scores.reduce(function (a, b) {
+  return Math.max(a, b);
+ });
+ player.bestScore = hightscore;
+ localStorage.setItem('player', JSON.stringify(player));
+
 }
 
 /**************************************************************************
@@ -215,6 +229,7 @@ function startOrStop() {
 
 function stopGame() {
  clearInterval(idSetinterval)
+ setLocalStorage();
  initializeGameState();
  gameState.isPlaying = false;
 
@@ -253,6 +268,7 @@ function listen() {
   }
  }
 }
+
 
 
 /***********************************************
