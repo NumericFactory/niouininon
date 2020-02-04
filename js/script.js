@@ -134,6 +134,7 @@ function resetPrint() {
  scoreElt.dataset.badge = 0;
 }
 
+
 function setLocalStorage() {
  player.scores.push(gameState.score)
  /*if(gameState.score > player.bestScore) {
@@ -144,7 +145,6 @@ function setLocalStorage() {
  });
  player.bestScore = hightscore;
  localStorage.setItem('player', JSON.stringify(player));
-
 }
 
 /**************************************************************************
@@ -239,7 +239,9 @@ function stopGame() {
  resetPrint();
  rec.abort();
  console.log(gameState);
- //alert("Fin")
+ //alert("Fin") 
+
+
 }
 
 function listen() {
@@ -285,6 +287,8 @@ function startGame() {
   // Charger le array randomQuestions de 10 questions au hasard
   gameState.randomQuestions = getRandomQuestions(10);
   console.log(gameState);
+  player.pseudo = prompt("Entrez votre pseudo");
+  console.log(player.pseudo)
   askQuestionToUser(gameState.currentIndex);
   listen();
 
