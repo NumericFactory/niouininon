@@ -39,3 +39,10 @@ function getTimerReader(sentence) {
  let nbWords = sentence.split(' ').length;
  return Math.ceil(nbWords * 60 / 250);
 }
+
+/*
+ Generer un id comme un id MongoDB
+*/
+function objectId(m = Math, d = Date, h = 16, s = s => m.floor(s).toString(h)) {
+ return s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+}

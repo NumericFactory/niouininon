@@ -39,20 +39,20 @@ let replayBtn = document.querySelector('.replaynow');
 let classementListElt = document.querySelector('div.classement');
 
 let classement = [
- { pseudo: "Fred Lossignol", avatar: 'avatar-4.png', score: 6 },
- { pseudo: "Adrien Sergent", avatar: 'avatar-3.png', score: 4 },
- { pseudo: "Bruce Banner", avatar: 'avatar-2.png', score: 3 },
- { pseudo: "Steve Rogers", avatar: 'avatar-1.png', score: 3 },
- { pseudo: "Natasha Romanoff", avatar: 'avatar-4.png', score: 2 },
- { pseudo: "Thor Odinson", avatar: 'avatar-3.png', score: 1 },
+ { id: 1, pseudo: "Natasha Romanoff", avatar: 'avatar-4.png', bestScore: 7 },
+ { id: 2, pseudo: "Fred Lossignol", avatar: 'avatar-4.png', bestScore: 6 },
+ { id: 3, pseudo: "Adrien Sergent", avatar: 'avatar-3.png', bestScore: 4 },
+ { id: 4, pseudo: "Bruce Banner", avatar: 'avatar-2.png', bestScore: 3 },
+ { id: 5, pseudo: "Steve Rogers", avatar: 'avatar-1.png', bestScore: 3 },
+ { id: 6, pseudo: "Thor Odinson", avatar: 'avatar-3.png', bestScore: 1 },
 ];
 
 player = {
- arrayOfWordsPlayerSaid: [],
- lastBadWordSaid: '',
- pseudo: '',
- scores: [],
- bestScore: 0
+ //arrayOfWordsPlayerSaid: [],
+ //lastBadWordSaid: '',
+ //pseudo: '',
+ //scores: [],
+ //bestScore: 0
 }
 
 //localStorage.setItem('player', JSON.stringify(player) );
@@ -98,6 +98,25 @@ function initializeGameState() {
  gameState.currentIndex = 0;
  gameState.score = 0;
  gameState.isPlaying = false;
+ gameState.classement = localStorage.getItem('classement') == null ? gameState.classement = classement : gameState.classement = JSON.parse(localStorage.getItem('classement'));
+}
+
+function initializePlayer() {
+ if (localStorage.getItem('player') != null) {
+  player = JSON.parse(localStorage.getItem('player'));
+ }
+ else {
+  player = {
+   id: objectId(),
+   arrayOfWordsPlayerSaid: [],
+   lastBadWordSaid: '',
+   pseudo: '',
+   avatar: 'avatar-1.png',
+   scores: [],
+   bestScore: 0
+  }
+ }
+ console.log(player);
 }
 
 function printScore(score) {
@@ -106,8 +125,9 @@ function printScore(score) {
 }
 
 function printClassement() {
+
  classementListElt.innerHTML = "";
- classement.map((gamer) => {
+ gameState.classement.map((gamer) => {
   let template = `
   <div class="tile">
   <div class="tile-icon">
@@ -115,7 +135,7 @@ function printClassement() {
   </div>
   <div class="tile-content">
    <p class="tile-title text-bold">${gamer.pseudo}</p>
-   <p class="tile-subtitle">${gamer.score}pts</p>
+   <p class="tile-subtitle">${gamer.bestScore}pts</p>
   </div>
  </div>
   `;
@@ -134,19 +154,95 @@ function resetPrint() {
  scoreElt.dataset.badge = 0;
 }
 
+function printPseudo(elt) {
+ if (player.pseudo.length > 0) {
+  elt.textContent = player.pseudo
+ }
+}
 
-function setLocalStorage() {
+
+function setPlayerInLocalStorage() {
  player.scores.push(gameState.score)
- /*if(gameState.score > player.bestScore) {
-     player.bestScore = gameState.score 
- } */
- let hightscore = player.scores.reduce(function (a, b) {
-  return Math.max(a, b);
- });
- player.bestScore = hightscore;
+ let highscore = Math.max(...player.scores);
+ player.bestScore = highscore;
  localStorage.setItem('player', JSON.stringify(player));
 }
 
+function setClassementInLocalStorage() {
+ localStorage.setItem('classement', JSON.stringify(classement));
+}
+
+
+/*
+function updateClassement() {
+ let foundPlayer = classement.find((joueur) => joueur.id == player.id);
+ if (foundPlayer != undefined) {
+  foundPlayer.bestScore = player.bestScore;
+ }
+ else {
+
+ }
+
+}
+*/
+
+
+function updateClassement() {
+ let allScores = [];
+ for (let joueur of classement) {
+  allScores.push(joueur.bestScore)
+ };
+ let maxScore = Math.max(...allScores);
+
+ // EFFACER LE JOUEUR DU CLASSEMENT SI IL Y EST
+ let foundPlayer = classement.find((joueur) => joueur.id == player.id);
+ if (foundPlayer != undefined) {
+  classement.splice(classement.indexOf(foundPlayer), 1);
+ }
+
+ // SI C'EST LE MEILLEUR ON L'INSERE TOUT EN HAUT
+ if (player.bestScore > maxScore) {
+  classement.splice(0, 0, player)
+ }
+ // SINON (si le joueur a le même score ou un socre juste en dessous un autre joueur)
+ else {
+  let inverseClassement = [...classement].sort((a, b) => a.bestScore - b.bestScore);
+  // le joueur qui a le même score OU superieur
+  let otherPlayer;
+  let indexPosition;
+  let insertBefore;
+  // Récuper LE joueur dans le classement qui a le même score OU le score supérieur
+  for (let autreJoueur of inverseClassement) {
+   if (player.bestScore == autreJoueur.bestScore) {
+    otherPlayer = autreJoueur;
+    insertBefore = true;
+    break;
+   }
+   else if (player.bestScore < autreJoueur.bestScore) {
+    otherPlayer = autreJoueur;
+    insertBefore = false;
+    break;
+   }
+  }
+  indexPosition = classement.indexOf(otherPlayer);
+  // Insertion SI un joueur a le même score
+  if (insertBefore) {
+   classement.splice(indexPosition, 0, player)
+  }
+  // Insertion SI un joueur a un score supérieur
+  else {
+   indexPosition++;
+   inverseClassement.splice(indexPosition, 0, player);
+   classement = inverseClassement.sort((a, b) => b.bestScore - a.bestScore);
+  }
+ }
+
+ /* SAUVEGARDER ET AFFICHER LE CLASSEMENT MIS A JOUR */
+ setClassementInLocalStorage();
+ printClassement();
+}
+
+/*
 /**************************************************************************
  Role : animer la progressbar en modifiant la valeur de son attribut value
 **************************************************************************/
@@ -228,8 +324,11 @@ function startOrStop() {
 }
 
 function stopGame() {
- clearInterval(idSetinterval)
- setLocalStorage();
+ clearInterval(idSetinterval);
+ setPlayerInLocalStorage();
+ if (player.scores[player.scores.length - 1] >= player.bestScore) {
+  updateClassement();
+ }
  initializeGameState();
  gameState.isPlaying = false;
 
@@ -250,16 +349,22 @@ function listen() {
   for (let vocal of e.results) {
    //console.log(vocal[0].transcript)
    // rechercher un mot interdit dans ce que dit le joueur (dans la string vocal[0].transcript)
+
+   /*
+    SI un mot présent dans le tableau des mots interdits (wrongWords)
+    existe dans le tableau des mots prononcé (player.arrayOfWordsPlayerSaid) 
+    found vaut TRUE
+   */
    player.arrayOfWordsPlayerSaid = vocal[0].transcript.split(" ");
    console.log(player.arrayOfWordsPlayerSaid);
    let found = player.arrayOfWordsPlayerSaid.some(badWord => {
-    if (wrongWords.indexOf(badWord) >= 0) {
+    if (wrongWords.indexOf(badWord) != -1) {
      player.lastBadWordSaid = badWord;
      modalBadWordElt.textContent = player.lastBadWordSaid;
      return true;
     }
    });
-   //if (vocal[0].transcript.includes('oui') || vocal[0].transcript.includes('non')) {
+   //if (vocal[0].transcript.includes('oui') || vocal[0].transcript.includes('non'))  {
    if (found) {
     rec.abort();
     //alert("Vous avez perdu !!! Votre score est de " + gameState.score);
@@ -277,6 +382,11 @@ function listen() {
  Role : démarrer le jeu
 ***********************************************/
 function startGame() {
+ if (player.pseudo == "") {
+  player.pseudo = prompt("Entrez votre pseudo").toUpperCase();
+  printPseudo(document.querySelector('div.score p'));
+ }
+
  rec.start();
  rec.onaudiostart = function () {
   console.log("démarrage");
@@ -287,8 +397,6 @@ function startGame() {
   // Charger le array randomQuestions de 10 questions au hasard
   gameState.randomQuestions = getRandomQuestions(10);
   console.log(gameState);
-  player.pseudo = prompt("Entrez votre pseudo");
-  console.log(player.pseudo)
   askQuestionToUser(gameState.currentIndex);
   listen();
 
@@ -310,7 +418,9 @@ function replay() {
 }
 
 
-
+initializePlayer();
+initializeGameState();
+printPseudo(document.querySelector('div.score p'));
 printClassement();
 
 /************************************************
