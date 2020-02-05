@@ -1,6 +1,18 @@
 p {
   margin: 0 0 1rem;
 }
+p.empty-title {
+  color: #000
+}
+p.empty-title span.pseudo {
+  background: #d6ffee;
+  padding: 1px;
+  border-bottom: 2px solid #01e184;
+}
+.modal-container {
+  top: 14px;
+  position: fixed;
+}
 div.classement div.player {
   background: #d6ffee;
   color: #000;

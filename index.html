@@ -2,131 +2,138 @@
 <html lang="en">
 
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta http-equiv="X-UA-Compatible">
- <title>Jeu ni oui ni non</title>
- <link rel="stylesheet" href="css/spectre.css">
- <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible">
+  <title>Jeu ni oui ni non</title>
+  <link rel="stylesheet" href="css/spectre.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
 
- <div class="container">
-  <div class="columns col-gapless">
-   <!-- INFOS -->
-   <div class="column col-3 col-md-12 col-xs-12">
+  <div class="container">
+    <div class="columns col-gapless">
+      <!-- INFOS -->
+      <div class="column col-3 col-md-12 col-xs-12">
 
-   </div>
-   <!-- JEU -->
-   <div class="column col-5 col-md-12 col-xs-12">
-    <div class="hero">
-     <div class="score">
-      <p>SCORE <span>
-        <figure class="avatar avatar-xl badge" data-badge="0" data-initial="YZ"><img src="img/avatar-1.png" alt="YZ">
-        </figure>
-       </span></p>
-     </div>
+      </div>
+      <!-- JEU -->
+      <div class="column col-5 col-md-12 col-xs-12">
+        <div class="hero">
+          <div class="score">
+            <p><span>
+                <figure class="avatar avatar-xl badge" data-badge="0" data-initial="YZ"><img src="img/avatar-1.png"
+                    alt="YZ">
+                </figure>
+              </span></p>
+          </div>
 
-     <h1>Ni oui ni non!</h1>
+          <h1>Ni oui ni non!</h1>
 
-     <div class="action">
-      <button class="btn" id="startGame">
-       <span>Démarrer le jeu</span>
-       <svg viewBox="0 0 32 32" class="icon icon-play" viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M11.303 8l11.394 7.997L11.303 24z" /></svg>
-       <svg viewBox="0 0 32 32" class="icon icon-pause hide" viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M18.432 7.5h4.547v17h-4.547zM9.022 7.5h4.545v17H9.022z" /></svg>
-      </button>
-     </div>
+          <div class="action">
+            <button class="btn heartBeat animated" id="startGame">
+              <span>Démarrer le jeu</span>
+              <svg viewBox="0 0 32 32" class="icon icon-play" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M11.303 8l11.394 7.997L11.303 24z" /></svg>
+              <svg viewBox="0 0 32 32" class="icon icon-pause hide" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M18.432 7.5h4.547v17h-4.547zM9.022 7.5h4.545v17H9.022z" /></svg>
+            </button>
+          </div>
 
-     <h2 class="question-title">Question <span></span></h2>
-    </div>
+          <h2 class="question-title">Question <span></span></h2>
+        </div>
 
-    <div class="question text-center">
-     <p></p>
-    </div>
+        <div class="question text-center">
+          <p></p>
+        </div>
 
-    <div class="timeToRead text-center">
-     <progress class="progress-bar" value="" max=""></progress>
-     <p class="responseTime"><em></em>s</p>
-    </div>
-   </div>
+        <div class="timeToRead text-center">
+          <progress class="progress-bar" value="" max=""></progress>
+          <p class="responseTime"><em></em>s</p>
+        </div>
+      </div>
 
-   <!-- CLASSEMENT -->
-   <div class="column col-2 col-md-12 col-xs-12 col-ml-auto">
-    <div class="panel">
-     <div class="panel-header text-center">
-      <div class="panel-title h5 mt-10">CLASSEMENT</div>
-     </div>
-     <nav class="panel-nav">
-      <ul class="tab tab-block">
-       <li class="tab-item active"><a href="#panels">Score</a></li>
-       <li class="tab-item"><a href="#panels">Moyenne</a></li>
-       <li class="tab-item"><a href="#panels">Parties</a></li>
-      </ul>
-     </nav>
-     <div class="panel-body classement">
+      <!-- CLASSEMENT -->
+      <div class="column col-2 col-md-12 col-xs-12 col-ml-auto">
+        <div class="panel">
+          <div class="panel-header text-center">
+            <div class="panel-title h5 mt-10">CLASSEMENT</div>
+          </div>
+          <nav class="panel-nav">
+            <ul class="tab tab-block">
+              <li class="tab-item active"><a href="#panels">Score</a></li>
+              <li class="tab-item"><a href="#panels">Moyenne</a></li>
+              <li class="tab-item"><a href="#panels">Parties</a></li>
+            </ul>
+          </nav>
+          <div class="panel-body classement">
 
-      <!--
+            <!--
       LISTE DU CLASSEMENT DES JOUEUR INJECTEES EN JS 
       D'APRES LE TABLEAU 'classement' grâce à la fonction printClassement()
      -->
 
-     </div>
-     <div class="panel-footer text-center">
-      <span class="copy text-center">
-       <a target="_blank" href="https://github.com/NumericFactory/niouininon">Github</a> .
-       <a target="_blank" href="https://twitter.com/FredLossignol">Twitter</a>
-      </span>
-      <!-- <button class="btn btn-primary btn-block">Save</button> -->
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
-
-
-
- <div class="modal" id="modal-id">
-  <a href="#close" class="modal-overlay" aria-label="Close"></a>
-  <div class="modal-container">
-   <div class="modal-header">
-    <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
-    <div class="modal-title h5 text-center">Oops tu as dis <span class="chip"><em></em></span>! GAME OVER ... </div>
-   </div>
-   <div class="modal-body">
-    <div class="content">
-     <!-- content here -->
-     <div class="column col-12">
-      <div class="empty">
-       <div class="empty-icon"><i class="icon icon-3x icon-mail"></i></div>
-       <p class="empty-title h5">Bravo ! tu as fais <strong>0</strong>pts</p>
-       <p class="empty-subtitle">Partage ton score et invite tes amis à jouer!</p>
-       <div class="empty-action">
-        <button class="btn btn-lg fbcolor">Partager sur Facebook</button>
-        <button class="btn btn-lg twcolor">Partager sur Twitter</button>
-       </div>
-       <div class="empty-action">
-
-       </div>
+          </div>
+          <div class="panel-footer text-center">
+            <span class="copy text-center">
+              <a target="_blank" href="https://github.com/NumericFactory/niouininon">Github</a> .
+              <a target="_blank" href="https://twitter.com/FredLossignol">Twitter</a>
+            </span>
+            <!-- <button class="btn btn-primary btn-block">Save</button> -->
+          </div>
+        </div>
       </div>
-     </div>
     </div>
-   </div>
-   <div class="modal-footer text-center">
-    <div class="text-center">
-     <button class="btn replaynow">Rejouer</button>
-    </div>
-
-   </div>
   </div>
- </div>
 
 
 
- <script src="js/utilities.js"> </script>
- <script src="js/script.js"> </script>
+  <div class="modal" id="modal-id">
+    <a href="#close" class="modal-overlay" aria-label="Close"></a>
+    <div class="modal-container">
+      <div class="modal-header">
+        <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
+        <div class="modal-title h5 text-center">
+          <span>Oh no ! 😄</span>
+          <span class="chip"><em></em><br></span>
+          GAME OVER 🙄
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <!-- content here -->
+          <div class="column col-12">
+            <div class="empty">
+              <div class="empty-icon"><i class="icon icon-3x icon-mail"></i></div>
+              <p class="empty-title h5">BRAVO <span class="pseudo"></span> ! <strong>0</strong>pts</p>
+              <p class="empty-subtitle">Partage ton score et invite tes amis à jouer!</p>
+              <div class="empty-action">
+                <button class="btn btn-lg fbcolor">Partager sur Facebook</button>
+                <button class="btn btn-lg twcolor">Partager sur Twitter</button>
+              </div>
+              <div class="empty-action">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+        <div class="text-center">
+          <button class="btn replaynow">Rejouer</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <audio src="sounds/start.wav"></audio>
+
+  <script src="js/utilities.js"> </script>
+  <script src="js/script.js"> </script>
 </body>
 
 </html>

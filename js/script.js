@@ -39,12 +39,12 @@ let replayBtn = document.querySelector('.replaynow');
 let classementListElt = document.querySelector('div.classement');
 
 let classement = [
- { id: 1, pseudo: "Natasha Romanoff", avatar: 'avatar-4.png', bestScore: 7 },
- { id: 2, pseudo: "Fred Lossignol", avatar: 'avatar-4.png', bestScore: 6 },
- { id: 3, pseudo: "Adrien Sergent", avatar: 'avatar-3.png', bestScore: 4 },
- { id: 4, pseudo: "Bruce Banner", avatar: 'avatar-2.png', bestScore: 3 },
- { id: 5, pseudo: "Steve Rogers", avatar: 'avatar-1.png', bestScore: 3 },
- { id: 6, pseudo: "Thor Odinson", avatar: 'avatar-3.png', bestScore: 1 },
+ { id: 1, pseudo: "Natasha Romanoff", avatar: 'avatar-4.png', bestScore: 7, averageScore: 5 },
+ { id: 2, pseudo: "Fred Lossignol", avatar: 'avatar-4.png', bestScore: 6, averageScore: 3 },
+ { id: 3, pseudo: "Adrien Sergent", avatar: 'avatar-3.png', bestScore: 4, averageScore: 3 },
+ { id: 4, pseudo: "Bruce Banner", avatar: 'avatar-2.png', bestScore: 3, averageScore: 3 },
+ { id: 5, pseudo: "Steve Rogers", avatar: 'avatar-1.png', bestScore: 3, averageScore: 2 },
+ { id: 6, pseudo: "Thor Odinson", avatar: 'avatar-3.png', bestScore: 1, averageScore: 1 },
 ];
 
 player = {
@@ -52,7 +52,8 @@ player = {
  //lastBadWordSaid: '',
  //pseudo: '',
  //scores: [],
- //bestScore: 0
+ //bestScore: 0,
+ //averageScore:0
 }
 
 //localStorage.setItem('player', JSON.stringify(player) );
@@ -84,6 +85,13 @@ let questions = [
  "Pouah! C'est toi qu'a pété ?"
 ];
 
+function getAverageScore(playerScores) {
+ let addition = 0;
+ for (let score of playerScores) {
+  addition += score;
+ }
+ return addition / playerScores.length;
+}
 
 let wrongWords = ["oui", "non"];
 
@@ -113,7 +121,8 @@ function initializePlayer() {
    pseudo: '',
    avatar: 'avatar-1.png',
    scores: [],
-   bestScore: 0
+   bestScore: 0,
+   averageScore: 0
   }
  }
  console.log(player);
@@ -122,6 +131,12 @@ function initializePlayer() {
 function printScore(score) {
  scoreElt.dataset.badge = score;
  modalScoreElt.textContent = score;
+ scoreElt.classList.add('heartBeat');
+ scoreElt.classList.add('animated');
+ setTimeout(function () {
+  scoreElt.classList.remove('heartBeat');
+  scoreElt.classList.remove('animated');
+ }, 1000);
 }
 
 function printClassement() {
@@ -146,6 +161,8 @@ function printClassement() {
  for (let playerDiv of playersElt) {
   if (playerDiv.dataset.id === player.id) {
    playerDiv.classList.add('player')
+   playerDiv.classList.add('bounceInLeft')
+   playerDiv.classList.add('animated')
   }
  }
 }
@@ -163,7 +180,8 @@ function resetPrint() {
 
 function printPseudo(elt) {
  if (player.pseudo.length > 0) {
-  elt.textContent = player.pseudo
+  elt.textContent = player.pseudo;
+  document.querySelector('.empty-title span.pseudo').textContent = player.pseudo
  }
 }
 
@@ -305,6 +323,10 @@ function askQuestionToUser(i) {
 *******************************************************************/
 function nextQuestion() {
  gameState.currentIndex++;
+ if (gameState.currentIndex > 0) {
+  document.querySelector('audio').src = 'sounds/point.wav';
+  document.querySelector('audio').play();
+ }
  gameState.score++;
  console.log('score', gameState.score);
  printScore(gameState.score);
@@ -332,11 +354,24 @@ function startOrStop() {
 }
 
 function stopGame() {
+ let phrasewinner = "Bravo ! 😄 Tu as fait ton meilleur score !";
+ let phraseloser = "Oh no ! 😄 Tu as dit ";
  clearInterval(idSetinterval);
  setPlayerInLocalStorage();
  if (player.scores[player.scores.length - 1] >= player.bestScore) {
+  document.querySelector('audio').src = 'sounds/best-score-after-lose.wav';
+  document.querySelector('div.modal div.modal-title span').textContent = phrasewinner;
+  modalBadWordElt.parentNode.style.display = 'none';
   updateClassement();
  }
+ else {
+  document.querySelector('audio').src = 'sounds/game-over.wav';
+  document.querySelector('div.modal div.modal-title span').textContent = phraseloser;
+  modalBadWordElt.parentNode.style.display = 'inline';
+  modalBadWordElt.textContent = player.lastBadWordSaid;
+ }
+
+ document.querySelector('audio').play()
  initializeGameState();
  gameState.isPlaying = false;
 
@@ -368,7 +403,6 @@ function listen() {
    let found = player.arrayOfWordsPlayerSaid.some(badWord => {
     if (wrongWords.indexOf(badWord) != -1) {
      player.lastBadWordSaid = badWord;
-     modalBadWordElt.textContent = player.lastBadWordSaid;
      return true;
     }
    });
@@ -394,6 +428,8 @@ function startGame() {
   player.pseudo = prompt("Entrez votre pseudo").toUpperCase();
   printPseudo(document.querySelector('div.score p'));
  }
+ document.querySelector('audio').src = 'sounds/start.wav';
+ document.querySelector('audio').play()
 
  rec.start();
  rec.onaudiostart = function () {
