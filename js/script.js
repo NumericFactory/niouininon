@@ -305,7 +305,14 @@ function askQuestionToUser(i) {
  let numberOfQuestion = gameState.currentIndex + 1; // Affiche "question 1" au lieu "question 0"
  questionTitleElt.style.opacity = 0.7;
  questionTitle.textContent = numberOfQuestion
- questionElt.textContent = gameState.randomQuestions[i];
+ questionElt.textContent = gameState.randomQuestions[i]; 
+
+ // LIRE LA QUESTION 
+
+ let synth = window.speechSynthesis; 
+ let pitchRobot = new SpeechSynthesisUtterance(gameState.randomQuestions[i]); 
+ synth.speak(pitchRobot); 
+ 
  // DELAI POUR REPONDRE A LA QUESTION
  timerReader = getTimerReader(gameState.randomQuestions[i]); // Nombre de seconde de temps de lecture de la question
  timerGlobal = timerReader + timerAnswer;
@@ -441,7 +448,7 @@ function startGame() {
   // Charger le array randomQuestions de 10 questions au hasard
   gameState.randomQuestions = getRandomQuestions(10);
   console.log(gameState);
-  askQuestionToUser(gameState.currentIndex);
+  askQuestionToUser(gameState.currentIndex); 
   listen();
 
  }
